@@ -24,6 +24,11 @@ const menuItems = [
     title: "Proovedores",
     path: "/dashboard/providers",
   },
+  {
+    icon: <IoListOutline />,
+    title: "Clientes",
+    path: "/dashboard/customers",
+  },
 ];
 
 export const Sidebar = () => {
