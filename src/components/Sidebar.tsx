@@ -1,11 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { CiLogout } from "react-icons/ci";
 import { SidebarItem } from "./SidebarItem";
+import { signOut } from "next-auth/react"; // Importa signOut
 import {
   IoCalendarOutline,
-  IoCheckboxOutline,
-  IoListOutline,
+  IoGridOutline,
+  IoStorefrontOutline,
+  IoPeopleOutline,
 } from "react-icons/io5";
 
 const menuItems = [
@@ -15,30 +19,34 @@ const menuItems = [
     path: "/dashboard",
   },
   {
-    icon: <IoCheckboxOutline />,
+    icon: <IoGridOutline />,
     title: "Categorias",
     path: "/dashboard/categories",
   },
   {
-    icon: <IoListOutline />,
-    title: "Proovedores",
+    icon: <IoStorefrontOutline />,
+    title: "Proveedores",
     path: "/dashboard/providers",
   },
   {
-    icon: <IoListOutline />,
+    icon: <IoPeopleOutline />,
     title: "Clientes",
     path: "/dashboard/customers",
   },
 ];
 
 export const Sidebar = () => {
+  const handleLogout = () => {
+    signOut(); // Llama a la función signOut para cerrar sesión
+  };
+
   return (
     <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
       <div>
         <div className="-mx-6 px-6 py-4">
           <Link href="#" title="home">
             <Image
-              src="https://images.vexels.com/media/users/3/147726/isolated/svg/3c35c23c922833a71a94e7d5faf28b88.svg"
+              src="https://cdn2.iconfinder.com/data/icons/startup-12/512/18-Setting-512.png"
               className="w-15"
               alt="tailus logo"
               width={50}
@@ -69,9 +77,12 @@ export const Sidebar = () => {
       </div>
 
       <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
-        <button className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-          <CiLogout />
-          <span className="group-hover:text-gray-700">Logout</span>
+        <button
+          onClick={handleLogout} // Llama a handleLogout al hacer clic
+          className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group hover:bg-gray-100 transition duration-200"
+        >
+          <CiLogout className="text-xl" />
+          <span className="group-hover:text-gray-700">Cerrar Sesión</span>
         </button>
       </div>
     </aside>
