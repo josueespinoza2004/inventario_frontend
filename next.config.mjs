@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.vexels.com",
+        hostname: "cdn2.iconfinder.com",
       },
     ],
   },
