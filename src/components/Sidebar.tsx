@@ -33,6 +33,11 @@ const menuItems = [
     title: "Clientes",
     path: "/dashboard/customers",
   },
+  {
+    icon: <IoPeopleOutline />,
+    title: "Ventas",
+    path: "/dashboard/sales",
+  },
 ];
 
 export const Sidebar = () => {
