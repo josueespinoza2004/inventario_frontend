@@ -2,7 +2,7 @@ import { CustomerData, CustomersResponse } from '../../interfaces/customer.inter
 
 export async function getAllCustomers(
   offset: number = 0,
-  limit: number = 3
+  limit: number = 1000
 ): Promise<CustomersResponse> {
   const response = await fetch(
     `http://localhost:4000/api/v1/customers?offset=${offset}&limit=${limit}`,
