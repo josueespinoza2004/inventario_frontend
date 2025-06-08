@@ -30,13 +30,23 @@ export function CategorieForm({ categorieId }: CategorieFormProps) {
     }
   }, [categorieId, setValue]);
 
-  const onSubmit = handleSubmit(async (data) => {
+const onSubmit = handleSubmit(async (data) => {
     if (categorieId) {
       await updateCategorie(Number(categorieId), data);
-      alert("Categoria actualizada correctamente");
+      Swal.fire({
+        icon: "success",
+        title: "Categoria actualizada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } else {
       await addCategorie(data);
-      alert("Categoria agregada correctamente");
+      Swal.fire({
+        icon: "success",
+        title: "Categoria agregada correctamente.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
     router.push("/dashboard/categories");
     router.refresh();
