@@ -44,7 +44,7 @@ export function CategorieForm({ categorieId }: CategorieFormProps) {
       await addCategorie(data);
       Swal.fire({
         icon: "success",
-        title: "Categoria agregada correctamente",
+        title: "Categoria agregada correctamente.",
         showConfirmButton: false,
         timer: 1500,
       });
