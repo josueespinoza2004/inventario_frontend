@@ -10,6 +10,7 @@ import { Input } from "../ui/input";
 import { Button, buttonVariants } from "../ui/button";
 import { addCategorie, updateCategorie, getCategorieById } from "../../app/api/categories.api";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 interface CategorieFormProps {
   categorieId?: string; // El ID de la categoria si se está editando, opcional
