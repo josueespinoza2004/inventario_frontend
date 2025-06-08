@@ -10,6 +10,7 @@ import { Input } from "../ui/input";
 import { Button, buttonVariants } from "../ui/button";
 import { addCategorie, updateCategorie, getCategorieById } from "../../app/api/categories.api";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 interface CategorieFormProps {
   categorieId?: string; // El ID de la categoria si se está editando, opcional
@@ -33,10 +34,20 @@ export function CategorieForm({ categorieId }: CategorieFormProps) {
   const onSubmit = handleSubmit(async (data) => {
     if (categorieId) {
       await updateCategorie(Number(categorieId), data);
-      alert("Categoria actualizada correctamente");
+      Swal.fire({
+        icon: "success",
+        title: "Categoria actualizada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } else {
       await addCategorie(data);
-      alert("Categoria agregada correctamente");
+      Swal.fire({
+        icon: "success",
+        title: "Categoria agregada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
     router.push("/dashboard/categories");
     router.refresh();

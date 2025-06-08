@@ -17,6 +17,7 @@ import { PiPlusCircleBold } from "react-icons/pi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { deleteCategorie } from "../../app/api/categories.api";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 interface CategoriesResponse {
   data: Categorie[];
@@ -45,14 +46,30 @@ export function CategorieTable() {
   
   async function handleDelete(id: string) {
   try {
-    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta ctaegoria?");
-    if (!confirmDelete) return;
+        const confirmDelete = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción eliminará la categoria de forma permanente.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      });
+    if (!confirmDelete.isConfirmed) {
+      return
+    };
 
     // Llama a la API para eliminar la categoria
     await deleteCategorie(id);
 
     // Muestra un mensaje de éxito
-    alert("Marca eliminada correctamente");
+    Swal.fire({
+        icon: "success",
+        title: "Categoria eliminada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
 
     // Recarga los datos de la tabla
     loadCategories(offset);
