@@ -10,7 +10,6 @@ import {
   IoGridOutline,
   IoStorefrontOutline,
   IoPeopleOutline,
-  IoCashOutline,
 } from "react-icons/io5";
 
 const menuItems = [
@@ -35,7 +34,7 @@ const menuItems = [
     path: "/dashboard/customers",
   },
   {
-    icon: <IoCashOutline />,
+    icon: <IoPeopleOutline />,
     title: "Ventas",
     path: "/dashboard/sales",
   },
