@@ -47,27 +47,20 @@ const menuItems = [
   },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ open }) => {
   const handleLogout = () => {
-    signOut(); // Llama a la función signOut para cerrar sesión
+    signOut();
   };
 
   return (
-    <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
+    <aside
+      className={`fixed top-0 left-0 h-screen transition-all duration-300 z-10
+      ${open ? "w-[250px] ml-0" : "w-0 -ml-[250px]"}
+      bg-white border-r flex flex-col justify-between overflow-y-auto`}
+    >
       <div>
-        <div className="-mx-6 px-6 py-4">
-          <Link href="#" title="home">
-            <Image
-              src="https://cdn2.iconfinder.com/data/icons/startup-12/512/18-Setting-512.png"
-              className="w-15"
-              alt="tailus logo"
-              width={50}
-              height={50}
-            />
-          </Link>
-        </div>
-
-        <div className="mt-8 text-center">
+        <div className="-mx-10 px-6 py-4"></div>
+        <div className="mt-6 text-center">
           <Image
             src="https://wallpapers.com/images/high/dr-strange-blurry-city-background-hftgodkniu88auel.webp"
             width={150}

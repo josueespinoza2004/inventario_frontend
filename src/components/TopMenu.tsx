@@ -2,12 +2,19 @@ import { CiBellOn, CiChat1, CiMenuBurger, CiSearch } from "react-icons/ci";
 import { FaTools } from "react-icons/fa";
 import { FaSquarePollVertical, FaBell  } from "react-icons/fa6";
 
-export const TopMenu = () => {
+export const TopMenu = ({ onToggleSidebar }) => {
   return (
-    <div className="sticky z-10 top-0 h-20 border-b bg-gradient-to-r from-blue-200 via-blue-100 to-blue-50 shadow-md">
+    <div className="sticky z-10 top-0 w-full h-20 border-b bg-gradient-to-r from-blue-200 via-blue-100 to-blue-50 shadow-md">
       <div className="px-6 flex items-center justify-between space-x-4 h-full">
         <div className="flex items-center gap-3">
-          <FaTools size={36} className="text-white-700" />
+          <button
+            type="button"
+            onClick={onToggleSidebar}
+            className="focus:outline-none"
+            title="Mostrar/Ocultar menú"
+          >
+            <FaTools size={36} className="text-black-700 hover:scale-110 transition" />
+          </button>
           <div>
             <h1 className="text-2xl font-bold text-black-800">Inventario Ferretería</h1>
             <span className="text-xs text-black-700">¡Gestión eficiente de productos y clientes!</span>
