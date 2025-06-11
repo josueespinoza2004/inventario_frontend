@@ -28,16 +28,60 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-400 via-cyan-300 to-blue-700">
+      {/* Fondo animado */}
+      <div className="absolute inset-0 -z-10">
+        <svg width="100%" height="100%">
+          <defs>
+            <radialGradient id="loginGrad1" cx="50%" cy="50%" r="80%">
+              <stop offset="0%" stopColor="#a7c7e7" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#2563eb" stopOpacity="0.3" />
+            </radialGradient>
+          </defs>
+          <ellipse
+            cx="70%"
+            cy="20%"
+            rx="350"
+            ry="160"
+            fill="url(#loginGrad1)"
+            style={{ animation: "move1 8s ease-in-out infinite alternate" }}
+          />
+          <ellipse
+            cx="30%"
+            cy="80%"
+            rx="250"
+            ry="120"
+            fill="#38bdf8"
+            opacity="0.25"
+            style={{ animation: "move2 10s ease-in-out infinite alternate" }}
+          />
+        </svg>
+        <style>
+          {`
+            @keyframes move1 {
+              0% { transform: translateY(0px);}
+              100% { transform: translateY(30px);}
+            }
+            @keyframes move2 {
+              0% { transform: translateX(0px);}
+              100% { transform: translateX(40px);}
+            }
+          `}
+        </style>
+      </div>
+
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-3xl shadow-xl p-8 flex flex-col items-center">
+        <h1 className="text-3xl font-bold text-blue-700 mb-2 text-center">
           Iniciar Sesión
         </h1>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <p className="text-blue-900 mb-6 text-center">
+          Accede al inventario de tu ferretería
+        </p>
+        <form onSubmit={handleLogin} className="space-y-5 w-full">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-blue-700"
             >
               Correo Electrónico
             </label>
@@ -48,13 +92,13 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-blue-700"
             >
               Contraseña
             </label>
@@ -65,15 +109,15 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50"
             />
           </div>
           {error && (
-            <p className="text-sm text-red-500">{error}</p>
+            <p className="text-sm text-red-500 text-center">{error}</p>
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-semibold shadow hover:scale-105 transition"
           >
             Iniciar Sesión
           </button>
