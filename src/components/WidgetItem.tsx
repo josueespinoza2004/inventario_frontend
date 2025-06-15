@@ -1,31 +1,30 @@
-import { FaTools } from "react-icons/fa";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-export const WidgetItem = () => {
+// Ejemplo de datos, reemplaza por tus datos reales
+const data = [
+  { name: "Martillo", stock: 50 },
+  { name: "Llave Inglesa", stock: 30 },
+  { name: "Taladro", stock: 20 },
+];
+
+export default function ProductBarChart({ products = data }) {
   return (
-    <div className="md:col-span-2 lg:col-span-1">
-      <div className="h-full py-8 px-6 space-y-4 rounded-xl border border-blue-200 bg-blue-50 shadow-sm">
-        <div className="flex flex-col items-center">
-          <div className="flex justify-center mb-2">
-            <FaTools size={36} className="text-blue-700" />
-          </div>
-          <h5 className="text-lg text-blue-800 text-center font-semibold">
-            Ventas Totales
-          </h5>
-          <h3 className="text-3xl font-bold text-blue-900 mt-2">$23,988</h3>
-          <div className="flex items-center gap-2 mt-1">
-            <svg
-              className="w-3 h-3 text-green-500"
-              viewBox="0 0 12 15"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M6 0L12 8H0L6 0Z" />
-            </svg>
-            <span className="text-green-600 font-medium">+2%</span>
-            <span className="text-xs text-gray-500">(vs semana pasada)</span>
-          </div>
-        </div>
-      </div>
+    <div className="w-full h-80 bg-white rounded-xl shadow p-4 mt-8">
+      <h4 className="text-lg font-semibold text-blue-800 mb-4">Stock de productos</h4>
+      <ResponsiveContainer width="100%" height="90%">
+        <BarChart data={products}>
+          <defs>
+            <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#2563eb" />
+            </linearGradient>
+          </defs>
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="stock" fill="url(#barGradient)" />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
-};
+}
