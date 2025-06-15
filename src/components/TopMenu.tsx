@@ -1,6 +1,7 @@
 import { CiBellOn, CiChat1, CiMenuBurger, CiSearch } from "react-icons/ci";
 import { FaTools } from "react-icons/fa";
 import { FaSquarePollVertical, FaBell  } from "react-icons/fa6";
+import Link from "next/link";
 
 export const TopMenu = ({ onToggleSidebar }) => {
   return (
@@ -41,10 +42,12 @@ export const TopMenu = ({ onToggleSidebar }) => {
           <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-blue-100 focus:bg-blue-200 active:bg-blue-300 md:hidden">
             <CiSearch />
           </button>
-          <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-blue-100 focus:bg-blue-200 active:bg-blue-300">
-            <FaSquarePollVertical size={25} />
-          </button>
-          <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-blue-100 focus:bg-blue-200 active:bg-blue-300"> 
+           <Link href="/report">
+             <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-blue-100 focus:bg-blue-200 active:bg-blue-300">
+                <FaSquarePollVertical size={25} />
+              </button>
+           </Link>
+           <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-blue-100 focus:bg-blue-200 active:bg-blue-300"> 
             <FaBell  size={25} />
           </button>
         </div>

@@ -83,7 +83,7 @@ export const Sidebar = ({ open }) => {
 
       <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
         <button
-          onClick={handleLogout} // Llama a handleLogout al hacer clic
+          onClick={handleLogout} 
           className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group hover:bg-gray-100 transition duration-200"
         >
           <CiLogout className="text-xl" />
