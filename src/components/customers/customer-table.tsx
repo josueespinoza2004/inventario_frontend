@@ -19,6 +19,7 @@ import { deleteCustomer } from "../../app/api/customers.api";
 import { useRouter } from "next/navigation";
 import { downloadReport } from "@/app/api/reports.api";
 import { HiDownload } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 interface CustomersResponse {
   data: Customer[];
@@ -47,21 +48,40 @@ export function CustomerTable() {
   
   async function handleDelete(id: string) {
   try {
-    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar este Cliente?");
-    if (!confirmDelete) return;
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
 
-    // Llama a la API para eliminar la categoria
+    if (!confirmDelete.isConfirmed) {
+      return; 
+    }
     await deleteCustomer(id);
 
-    // Muestra un mensaje de éxito
-    alert("Cliente eliminado correctamente");
+    await Swal.fire({
+      icon: "success",
+      title: "Cliente eliminado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
-    // Recarga los datos de la tabla
-    loadCustomers(offset);
-  } catch (error) {
-    console.error("Error al eliminar el Cliente:", error);
-    alert("Hubo un error al intentar eliminar el Cliente.");
-  }
+    loadCustomers(offset); 
+    } catch (error) {
+      console.error("Error al eliminar el cliente:", error);
+
+
+      await Swal.fire({
+        icon: "error",
+        title: "Error al eliminar el cliente",
+        text:error.message,
+      });
+    }
 }
 
   return (

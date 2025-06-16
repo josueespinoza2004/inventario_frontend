@@ -20,8 +20,6 @@ import { getAllProviders } from "../../app/api/providers.api";
 import { PiPlusCircleBold } from "react-icons/pi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-import { downloadReport } from "@/app/api/reports.api";
-import { HiDownload } from "react-icons/hi";
 
 interface ProductsResponse {
   data: Product[];
@@ -124,13 +122,7 @@ function getCategoryName(categoryId: number) {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end gap-4">
-        <Button
-          className="bg-blue-600 text-white hover:bg-blue-700 squared-full p-3"
-          onClick={() => downloadReport('products', 'Productos.xlsx')}
-        >
-          <HiDownload className="h-10 w-10" /> 
-        </Button>
+      <div className="flex justify-end">
         <Link
           href="/dashboard/products/add"
           className={buttonVariants({ variant: "agregar" })}
