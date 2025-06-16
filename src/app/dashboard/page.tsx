@@ -1,4 +1,6 @@
 "use client";
+
+
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
@@ -15,13 +17,21 @@ export default function DashboardPage() {
   const router = useRouter();
   const [totalProviders, setTotalProviders] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
-  const [totalSales, setTotalSales] = useState(0);
+  const [totalSales, setTotalSales] = useState(0);;
+  const [newUser, setNewUser] = useState(false);
+
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/auth/login");
+      router.push("/dashboard");
     }
   }, [status, router]);
+
+  useEffect(() => {
+    // Verifica si el parámetro "newUser" está presente en la URL
+    const searchParams = new URLSearchParams(window.location.search);
+    setNewUser(searchParams.get("newUser") === "true");
+  }, []);
 
   useEffect(() => {
     async function fetchProviders() {
@@ -75,8 +85,10 @@ useEffect(() => {
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 via-cyan-100 to-blue-200 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold text-blue-800 mb-3 text-center w-full">
-        ¡Nos alegra tenerte de vuelta en el sistema de Inventario Ferretería!
+       <h1 className="text-3xl md:text-4xl font-bold text-blue-800 mb-3 text-center w-full">
+        {newUser
+          ? "¡Bienvenido al sistema de Inventario Ferretería! Nos alegra que te unas a nosotros."
+          : "¡Nos alegra tenerte de vuelta en el sistema de Inventario Ferretería!"}
       </h1>
       <p className="text-blue-900 text-center mb-2 text-lg w-full">
         Hoy es un buen día para mejorar tu negocio.

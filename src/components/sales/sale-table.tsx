@@ -20,6 +20,7 @@ import { BiPencil, BiTrash } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import { downloadReport } from "@/app/api/reports.api";
 import { HiDownload } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 interface SalesResponse {
   data: Sale[];
@@ -56,16 +57,47 @@ export function SaleTable() {
   }, []);
 
   async function handleDelete(id: string) {
-    try {
-      const confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta Venta?");
-      if (!confirmDelete) return;
-      await deleteSale(id);
-      alert("Venta eliminada correctamente");
-      loadSales(offset);
-    } catch (error) {
-      console.error("Error al eliminar la Venta:", error);
-      alert("Hubo un error al intentar eliminar la Venta.");
+  try {
+    // Usa SweetAlert2 para mostrar la confirmación
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará la venta de forma permanente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    // Verifica si el usuario confirmó la acción
+    if (!confirmDelete.isConfirmed) {
+      return; // Si no confirmó, no se realiza la eliminación
     }
+
+    // Llama a la API para eliminar la venta
+    await deleteSale(id);
+
+    // Muestra un mensaje de éxito
+    await Swal.fire({
+      icon: "success",
+      title: "Venta eliminada correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    // Recarga los datos de la tabla
+    loadSales(offset);
+  } catch (error) {
+    console.error("Error al eliminar la venta:", error);
+
+    // Muestra un mensaje de error
+    await Swal.fire({
+      icon: "error",
+      title: "Hubo un error al intentar eliminar la venta.",
+      text: error.message,
+    });
+  }
   }
 
   // Función para obtener el nombre del cliente por ID

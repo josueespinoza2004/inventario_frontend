@@ -11,6 +11,7 @@ import { Button, buttonVariants } from "../ui/button";
 import { addSale, updateSale, getSaleById } from "../../app/api/sales.api";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { getAllCustomers } from "@/app/api/customers.api";
+import Swal from "sweetalert2";
 
 interface SaleFormProps {
   saleId?: string;
@@ -60,15 +61,34 @@ export function SaleForm({ saleId }: SaleFormProps) {
 
     console.log("Payload:", payload);
 
+  try {
     if (saleId) {
       await updateSale(Number(saleId), payload);
-      alert("Venta actualizada correctamente");
+      await Swal.fire({
+        icon: "success",
+        title: "Venta actualizada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } else {
       await addSale(payload);
-      alert("Venta agregada correctamente");
+      await Swal.fire({
+        icon: "success",
+        title: "Venta agregada correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
     router.push("/dashboard/sales");
-  });
+  } catch (error) {
+    console.error("Error al enviar el formulario:", error);
+    await Swal.fire({
+      icon: "error",
+      title: "Hubo un error al enviar el formulario.",
+      text: error.message,
+    });
+  }
+});
 
   return (
     <form onSubmit={onSubmit}>
