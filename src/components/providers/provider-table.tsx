@@ -17,6 +17,8 @@ import { PiPlusCircleBold } from "react-icons/pi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { deleteProvider } from "../../app/api/providers.api";
 import { useRouter } from "next/navigation";
+import { downloadReport } from "@/app/api/reports.api";
+import { HiDownload } from "react-icons/hi";
 
 interface ProvidersResponse {
   data: Provider[];
@@ -64,7 +66,13 @@ export function ProviderTable() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-4">
+        <Button
+          className="bg-blue-600 text-white hover:bg-blue-700 squared-full p-3"
+          onClick={() => downloadReport('providers', 'Proveedores.xlsx')}
+        >
+          <HiDownload className="h-10 w-10" /> 
+        </Button>
         <Link
           href="/dashboard/providers/add"
           className={buttonVariants({ variant: "agregar" })}

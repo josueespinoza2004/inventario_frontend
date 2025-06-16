@@ -18,6 +18,8 @@ import { BiPencil, BiTrash } from "react-icons/bi";
 import { deleteCategorie } from "../../app/api/categories.api";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { downloadReport } from "@/app/api/reports.api";
+import { HiDownload } from "react-icons/hi";
 
 interface CategoriesResponse {
   data: Categorie[];
@@ -90,7 +92,13 @@ export function CategorieTable() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-4">
+        <Button
+                  className="bg-blue-600 text-white hover:bg-blue-700 squared-full p-3"
+                  onClick={() => downloadReport('categories', 'Categorias.xlsx')}
+                >
+                  <HiDownload className="h-10 w-10" /> 
+                </Button>
         <Link
           href="/dashboard/categories/add"
           className={buttonVariants({ variant: "agregar" })}
