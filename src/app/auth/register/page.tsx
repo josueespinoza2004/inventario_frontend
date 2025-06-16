@@ -7,16 +7,18 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [fullName, setFullName] = useState("");
   const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/auth/register", {
+      await axios.post("http://localhost:4000/api/v1/auth/register", {
         email,
         password,
+        fullName
       });
-      router.push("/auth/login");
+      router.push("/dashboard?newUser=true");
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed");
     }
@@ -103,6 +105,23 @@ export default function Register() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-blue-700"
+            >
+              Nombre Completo
+            </label>
+            <input
+              id="fullName"
+              type="fullName"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               required
               className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50"
             />

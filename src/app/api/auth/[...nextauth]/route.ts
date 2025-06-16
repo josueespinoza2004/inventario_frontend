@@ -25,7 +25,7 @@ const handler = NextAuth({
             return {
               id: res.data.id,
               email: res.data.email,
-              name: res.data.name, // Usa "name" en lugar de "fullname"
+              name: res.data.fullName, // Usa "name" en lugar de "fullname"
               role: res.data.role || "user",
               token: res.data.token,
             };

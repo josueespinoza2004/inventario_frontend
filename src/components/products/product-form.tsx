@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { addProduct, updateProduct, getProductById } from "../../app/api/products.api";
 import { getAllCategories } from "@/app/api/categories.api";
 import { getAllProviders } from "@/app/api/providers.api";
+import Swal from "sweetalert2";
 
 interface ProductFormProps {
   productId?: string;
@@ -102,17 +103,31 @@ useEffect(() => {
 
     try {
       if (productId) {
-        await updateProduct(productId, formData);
-        alert("Producto actualizado correctamente");
-      } else {
-        await addProduct(formData);
-        alert("Producto agregado correctamente");
-      }
-      router.push("/dashboard/products");
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario.");
+await updateProduct(productId, formData);
+      await Swal.fire({
+        icon: "success",
+        title: "Producto actualizado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      await addProduct(formData);
+      await Swal.fire({
+        icon: "success",
+        title: "Producto agregado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
+    router.push("/dashboard/products");
+  } catch (error) {
+    console.error("Error al enviar el formulario:", error);
+    await Swal.fire({
+      icon: "error",
+      title: "Hubo un error al enviar el formulario.",
+      text: error.message,
+    });
+  }
   });
 
   return (

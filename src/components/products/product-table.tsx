@@ -20,6 +20,9 @@ import { getAllProviders } from "../../app/api/providers.api";
 import { PiPlusCircleBold } from "react-icons/pi";
 import { BiPencil, BiTrash } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import { downloadReport } from "@/app/api/reports.api";
+import { HiDownload } from "react-icons/hi";
 
 interface ProductsResponse {
   data: Product[];
@@ -93,18 +96,47 @@ const loadCategories = async () => {
   }
 
   async function handleDelete(id: string) {
-    try {
-      const confirmDelete = confirm(
-        "¿Estás seguro de que deseas eliminar este Producto?"
-      );
-      if (!confirmDelete) return;
-      await deleteProduct(id);
-      alert("Producto eliminado correctamente");
-      loadProducts(offset);
-    } catch (error) {
-      console.error("Error al eliminar el Producto:", error);
-      alert("Hubo un error al intentar eliminar el Producto.");
+try {
+    // Usa SweetAlert2 para mostrar la confirmación
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el producto de forma permanente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    // Verifica si el usuario confirmó la acción
+    if (!confirmDelete.isConfirmed) {
+      return; // Si no confirmó, no se realiza la eliminación
     }
+
+    // Llama a la API para eliminar el producto
+    await deleteProduct(id);
+
+    // Muestra un mensaje de éxito
+    await Swal.fire({
+      icon: "success",
+      title: "Producto eliminado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    // Recarga los datos de la tabla
+    loadProducts(offset);
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error);
+
+    // Muestra un mensaje de error
+    await Swal.fire({
+      icon: "error",
+      title: "Hubo un error al intentar eliminar el producto.",
+      text: error.message,
+    });
+  }
   }
 
 function getCategoryName(categoryId: number) {
@@ -122,7 +154,13 @@ function getCategoryName(categoryId: number) {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-4">
+        <Button
+          className="bg-blue-600 text-white hover:bg-blue-700 squared-full p-3"
+          onClick={() => downloadReport('products', 'Productos.xlsx')}
+        >
+         <HiDownload className="h-10 w-10" /> 
+        </Button>
         <Link
           href="/dashboard/products/add"
           className={buttonVariants({ variant: "agregar" })}

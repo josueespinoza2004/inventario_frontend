@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { CiLogout } from "react-icons/ci";
 import { SidebarItem } from "./SidebarItem";
-import { signOut } from "next-auth/react"; // Importa signOut
+import { signOut } from "next-auth/react"; 
+import { useSession } from "next-auth/react";
+
 import {
   IoCalendarOutline,
   IoGridOutline,
@@ -48,8 +50,9 @@ const menuItems = [
 ];
 
 export const Sidebar = ({ open }) => {
+  const { data: session } = useSession();
   const handleLogout = () => {
-    signOut();
+    signOut({ callbackUrl: "/" }); 
   };
 
   return (
@@ -69,7 +72,7 @@ export const Sidebar = ({ open }) => {
             className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
           />
           <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">
-            Josue Nathalie Mayra
+            {session?.user?.name || "Usuario"}
           </h5>
           <span className="hidden text-gray-400 lg:block">Admin</span>
         </div>
