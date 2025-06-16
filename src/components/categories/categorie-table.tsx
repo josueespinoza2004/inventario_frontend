@@ -45,6 +45,14 @@ export function CategorieTable() {
   useEffect(() => {
     loadCategories(0);
   }, []);
+
+  if (!categoriesData.data.length) {
+    return (
+    <div >
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div>
+  );
+  }
   
   async function handleDelete(id: string) {
   try {

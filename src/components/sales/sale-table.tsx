@@ -52,9 +52,18 @@ export function SaleTable() {
   };
 
   useEffect(() => {
+    console.log("Ventas cargadas:", salesData.data);
     loadSales(0);
     loadCustomers();
   }, []);
+
+  if (!salesData.data.length) {
+      return (
+      <div >
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+      </div>
+    );
+    }
 
   async function handleDelete(id: string) {
   try {
