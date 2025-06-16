@@ -23,7 +23,7 @@ export default function ProductBarChart() {
   }, []);
 
   return (
-    <div className="w-full h-80 bg-blue rounded-xl shadow p-4 mt-8">
+    <div className="w-full h-80 bg-white rounded-xl shadow p-4 mt-8">
       <h4 className="text-lg font-semibold text-blue-800 mb-4">Stock de productos</h4>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={products}>
