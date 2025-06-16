@@ -11,6 +11,7 @@ import { Button, buttonVariants } from "../ui/button";
 import { addProvider, updateProvider, getProviderById } from "../../app/api/providers.api";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 interface ProviderFormProps {
   providerId?: string; 
@@ -37,19 +38,36 @@ export function ProviderForm({ providerId }: ProviderFormProps) {
 }, [providerId, setValue]);
 
 const onSubmit = handleSubmit(async (data) => {
-  // Convierte phone_number a número
   const payload = {
     ...data,
     phone_number: Number(data.phone_number),
   };
-  if (providerId) {
-    await updateProvider(Number(providerId), payload);
-    alert("Proveedor actualizado correctamente");
-  } else {
-    await addProvider(payload);
-    alert("Proveedor agregado correctamente");
+  try {
+    if (providerId) {
+      await updateProvider(Number(providerId), payload);
+      await Swal.fire({
+        icon: "success",
+        title: "Proveedor actualizado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      await addProvider(payload);
+      await Swal.fire({
+        icon: "success",
+        title: "Proveedor agregado correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    router.push("/dashboard/providers");
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Hubo un error al guardar el proveedor.",
+      showConfirmButton: true,
+    });
   }
-  router.push("/dashboard/providers");
 });
 
   return (

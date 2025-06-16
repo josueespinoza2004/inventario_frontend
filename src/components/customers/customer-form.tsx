@@ -11,6 +11,7 @@ import { Button, buttonVariants } from "../ui/button";
 import { addCustomer, updateCustomer, getCustomerById } from "../../app/api/customers.api";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 interface CustomerFormProps {
   customerId?: string; 
@@ -37,20 +38,37 @@ export function CustomerForm({ customerId }: CustomerFormProps) {
 }, [customerId, setValue]);
 
 const onSubmit = handleSubmit(async (data) => {
-  // Convierte phone_number a número
   const payload = {
-    ...data,
-    phone_number: Number(data.phone_number),
-  };
-  if (customerId) {
-    await updateCustomer(Number(customerId), payload);
-    alert("Cliente actualizado correctamente");
-  } else {
-    await addCustomer(payload);
-    alert("Cliente agregado correctamente");
-  }
-  router.push("/dashboard/customers");
-});
+      ...data,
+      phone_number: Number(data.phone_number),
+    };
+    try {
+      if (customerId) {
+        await updateCustomer(Number(customerId), payload);
+        await Swal.fire({
+          icon: "success",
+          title: "Cliente actualizado correctamente",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        await addCustomer(payload);
+        await Swal.fire({
+          icon: "success",
+          title: "Cliente agregado correctamente",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      router.push("/dashboard/customers");
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Hubo un error al guardar el Cliente.",
+            showConfirmButton: true,
+          });
+        }
+      });
 
   return (
     <form onSubmit={onSubmit}>

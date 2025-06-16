@@ -19,6 +19,7 @@ import { deleteProvider } from "../../app/api/providers.api";
 import { useRouter } from "next/navigation";
 import { downloadReport } from "@/app/api/reports.api";
 import { HiDownload } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 interface ProvidersResponse {
   data: Provider[];
@@ -47,20 +48,36 @@ export function ProviderTable() {
   
   async function handleDelete(id: string) {
   try {
-    const confirmDelete = confirm("¿Estás seguro de que deseas eliminar este Proveedor?");
-    if (!confirmDelete) return;
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
 
-    // Llama a la API para eliminar la categoria
+    if (!confirmDelete.isConfirmed) return;
+
     await deleteProvider(id);
 
-    // Muestra un mensaje de éxito
-    alert("Proveedor eliminado correctamente");
+    await Swal.fire({
+      icon: "success",
+      title: "Proveedor eliminado correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
-    // Recarga los datos de la tabla
     loadProviders(offset);
   } catch (error) {
     console.error("Error al eliminar el Proveedor:", error);
-    alert("Hubo un error al intentar eliminar el Proveedor.");
+    Swal.fire({
+      icon: "error",
+      title: "Hubo un error al intentar eliminar el Proveedor.",
+      showConfirmButton: true,
+    });
   }
 }
 

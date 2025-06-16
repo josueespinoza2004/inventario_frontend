@@ -39,6 +39,8 @@ export async function updateSale(id: string, saleData: SaleData) {
   });
 
   if (!res.ok) {
+    const errorText = await res.text(); // 👈 IMPORTANTE: ver el error del backend
+    console.error("Error del backend al actualizar:", errorText); // 👈 Esto te dirá el verdadero problema
     throw new Error("Error al actualizar la venta");
   }
 
