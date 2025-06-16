@@ -7,6 +7,7 @@ import LogoutButton from "@/components/LogoutButton";
 import { useEffect, useState } from "react";
 import { FaTools, FaBoxOpen, FaUsers, FaTruck, FaChartLine } from "react-icons/fa";
 import ProductBarChart from "@/components/WidgetItem";
+import SaleLineChart from "@/components/WidgetItem2";
 import { getAllProviders } from "@/app/api/providers.api";
 import { getAllProducts } from "@/app/api/products.api";
 import { getAllCustomers } from "@/app/api/customers.api";
@@ -133,8 +134,14 @@ useEffect(() => {
           <span className="text-xs text-green-600 ml-2">+2% vs semana pasada</span>
         </li>
       </ul>
-      <div className="w-full flex justify-center">
-        <ProductBarChart />
+      <div className="flex flex-col gap-10 items-center w-full">
+        <div className="w-full max-w-5xl">
+          <ProductBarChart />
+        </div>
+      
+        <div className="w-full max-w-5xl">
+          <SaleLineChart />
+        </div>
       </div>
     </main>
   );
